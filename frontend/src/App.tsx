@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Navigate, Link } from "react-router";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Artists from "./pages/Artists";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-gray-50 text-gray-800">
+      <header className="bg-emerald-600 text-white p-4 flex justify-between items-center shadow">
+        <h1 className="text-xl font-semibold">
+          <Link to="/">Spotify&nbsp;Lite</Link>
+        </h1>
+        <nav className="space-x-4">
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>
+          <Link to="/artists" className="hover:underline">
+            Artists
+          </Link>
+          <Link to="/profile" className="hover:underline">
+            Profile
+          </Link>
+        </nav>
+      </header>
+      <main className="p-6 max-w-6xl mx-auto">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/artists" element={<Artists />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
-
-export default App

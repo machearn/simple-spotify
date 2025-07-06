@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
 
+/** GET /user/info?userId=<id> */
+export async function getProfile(req: Request, res: Response) {
+  const { userId } = req.query as { userId: string };
+  const user = await User.findById(userId);
+  res.json(user ? { username: user.username, email: user.email } : {});
+}
+
 /** PUT /user/info */
 export async function updateProfile(req: Request, res: Response) {
   const { userId, username, email, password } = req.body;
@@ -31,6 +38,15 @@ export async function likeSong(req: Request, res: Response) {
     { new: true },
   );
   res.json({ message: "Song liked" });
+}
+
+/** GET /artists?userId=<userId> */
+export async function getFollowedArtists(req: Request, res: Response) {
+  const { userId } = req.query as { userId: string };
+  const user = await User.findById(userId).populate({
+    path: "followedArtists",
+  });
+  res.json(user?.followedArtists ?? []);
 }
 
 /** PUT /artists (follow) – delegated here for brevity */
