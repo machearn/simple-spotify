@@ -3,7 +3,7 @@ import api from "../api";
 import type { User, Song, Artist } from "../types";
 
 export default function Profile() {
-  const userId = "686899b58dc8a617bdd93d0b";
+  const userId = "686b0d92c2f3f423f3763344";
   const [user, setUser] = useState<User | null>(null);
   const [likedSongs, setLikedSongs] = useState<Song[]>([]);
   const [followedArtists, setFollowedArtists] = useState<Artist[]>([]);

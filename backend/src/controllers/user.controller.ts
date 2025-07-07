@@ -32,12 +32,15 @@ export async function getLikedSongs(req: Request, res: Response) {
 /** PUT /songs (like) – delegated here for brevity */
 export async function likeSong(req: Request, res: Response) {
   const { userId, songId } = req.body;
-  await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     userId,
     { $addToSet: { likedSongs: songId } },
     { new: true },
-  );
-  res.json({ message: "Song liked" });
+  ).populate({
+    path: "likedSongs",
+    populate: "artist",
+  });
+  res.json(user?.likedSongs ?? []);
 }
 
 /** GET /artists?userId=<userId> */
@@ -52,10 +55,12 @@ export async function getFollowedArtists(req: Request, res: Response) {
 /** PUT /artists (follow) – delegated here for brevity */
 export async function followArtist(req: Request, res: Response) {
   const { userId, artistId } = req.body;
-  await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     userId,
     { $addToSet: { followedArtists: artistId } },
     { new: true },
-  );
-  res.json({ message: "Artist followed" });
+  ).populate({
+    path: "followedArtists",
+  });
+  res.json(user?.followedArtists ?? []);
 }

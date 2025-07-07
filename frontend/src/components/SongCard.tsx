@@ -1,13 +1,12 @@
-import api from "../api";
 import type { Song } from "../types";
 
 interface Props {
   song: Song;
-  userId: string;
+  liked: boolean;
+  click: () => void;
 }
 
-export default function SongCard({ song, userId }: Props) {
-  const like = () => api.put("/user/songs", { userId, songId: song._id });
+export default function SongCard({ song, liked, click }: Props) {
   return (
     <div className="flex flex-col justify-between w-60 p-4 border rounded shadow hover:shadow-md bg-white">
       <div>
@@ -16,12 +15,18 @@ export default function SongCard({ song, userId }: Props) {
           {song.artist.name} · {song.genre || "—"} · {song.language || "—"}
         </p>
       </div>
-      <button
-        onClick={like}
-        className="mt-3 px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700"
-      >
-        ♥ Like
-      </button>
+      {liked ? (
+        <button className="mt-3 px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700">
+          ♥ Liked
+        </button>
+      ) : (
+        <button
+          onClick={click}
+          className="mt-3 px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700"
+        >
+          ♥ Like
+        </button>
+      )}
     </div>
   );
 }

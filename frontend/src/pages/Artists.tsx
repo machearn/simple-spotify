@@ -12,6 +12,7 @@ export default function Artists() {
   const [filters, setFilters] = useState<FiltersState>({
     genre: "",
   });
+  const userId = "686b0d92c2f3f423f3763344";
 
   useEffect(() => {
     const params = { search, ...filters };
@@ -28,7 +29,7 @@ export default function Artists() {
         setFilters={setFilters}
         config={{ language: false }}
       />
-      <ArtistList artists={artists} />
+      <ArtistList userId={userId} artists={artists} />
     </div>
   );
 }
